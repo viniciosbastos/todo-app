@@ -37,13 +37,13 @@ class AddEditFragment : Fragment() {
 
     private fun addTodo() {
         viewModel.addTodo()
-        resetInputs()
+//        resetInputs()
     }
 
-    private fun resetInputs() {
-        binding.todoText.text = null
-        binding.doneCheck.isChecked = false
-    }
+//    private fun resetInputs() {
+//        binding.todoText.text =
+//        binding.doneCheck.isChecked = false
+//    }
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

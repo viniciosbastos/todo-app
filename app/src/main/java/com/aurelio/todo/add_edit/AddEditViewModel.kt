@@ -32,6 +32,11 @@ class AddEditViewModel : ViewModel() {
         var todo = ToDo(description = todoDescription.value!!, finished = todoFinished.value!!)
         todoList.add(todo)
         _todoList.value = todoList
+        resetInputs()
     }
 
+    private fun resetInputs() {
+        todoDescription.value = ""
+        todoFinished.value = false
+    }
 }

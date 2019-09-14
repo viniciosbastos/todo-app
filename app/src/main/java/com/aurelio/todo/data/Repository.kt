@@ -22,7 +22,7 @@ class Repository {
 
     companion object {
         private lateinit var INSTANCE: Repository
-        fun getIntance(): Repository {
+        fun getInstance(): Repository {
             if (INSTANCE != null)
                 INSTANCE = Repository()
             return INSTANCE
