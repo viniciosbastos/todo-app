@@ -7,42 +7,33 @@ import com.aurelio.todo.data.ToDo
 
 class AddEditViewModel : ViewModel() {
 
-    private val task: Task
-    private val todo: ToDo
-
-    init {
-        task = Task()
-        todo = ToDo()
-    }
-
-//    fun getTaskDescription(): String = task.description
+    private val task: Task = Task()
+    private var todo: ToDo = ToDo()
 
     var taskDescription: String? = null
         @Bindable
-        set
+        set (value: String?) {
+            field = value
+            task.description = value ?: ""
+        }
 
     var todoDescription: String? = null
         @Bindable
-        set
+        set (value: String?) {
+            field = value
+            todo.description = value ?: ""
+        }
 
     var todoChecked: Boolean? = null
         @Bindable
-        set
+        set (value: Boolean?) {
+            field = value
+            todo.finished = value ?: false
+        }
 
-//    fun getTodoDescription(): String = todo.description
-//
-//    @Bindable
-//    fun setTodoDescription(value: String) {
-//        if (todo.description != value)
-//            todo.description = value
-//    }
-//
-//    fun getTodoChecked(): Boolean = todo.finished
-//
-//    @Bindable
-//    fun setTodoChecked(value: Boolean) {
-//        if (todo.finished != value)
-//            todo.finished = value
-//    }
+    fun addTodo() {
+        task.todos?.add(todo)
+        todo = ToDo()
+    }
 
 }

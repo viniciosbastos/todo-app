@@ -1,6 +1,5 @@
 package com.aurelio.todo.add_edit
 
-import android.opengl.Visibility
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.*
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 
 import com.aurelio.todo.R
-import com.aurelio.todo.data.Task
-import com.aurelio.todo.data.ToDo
 import com.aurelio.todo.databinding.FragmentAddEditBinding
 
 class AddEditFragment : Fragment() {
@@ -39,8 +36,15 @@ class AddEditFragment : Fragment() {
     }
 
     private fun addTodo() {
-        Toast.makeText(context, "ToDo ${viewModel.todoDescription}", Toast.LENGTH_LONG).show()
+        viewModel.addTodo()
+        resetInputs()
     }
+
+    private fun resetInputs() {
+        binding.todoText.text = null
+        binding.doneCheck.isChecked = false
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.action_menu, menu)

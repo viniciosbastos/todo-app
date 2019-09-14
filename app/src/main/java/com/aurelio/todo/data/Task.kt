@@ -3,5 +3,5 @@ package com.aurelio.todo.data
 data class Task (
     var id: Int? = null,
     var description: String = "",
-    var todos: List<ToDo>? = null
+    var todos: MutableList<ToDo>? = mutableListOf()
 )
