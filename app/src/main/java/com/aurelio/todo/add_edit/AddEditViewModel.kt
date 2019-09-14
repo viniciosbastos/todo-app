@@ -1,39 +1,37 @@
 package com.aurelio.todo.add_edit
 
 import androidx.databinding.Bindable
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.aurelio.todo.data.Task
 import com.aurelio.todo.data.ToDo
 
 class AddEditViewModel : ViewModel() {
 
-    private val task: Task = Task()
-    private var todo: ToDo = ToDo()
+    val taskDescription = MutableLiveData<String>()
+    val todoDescription = MutableLiveData<String>()
+    val todoFinished = MutableLiveData<Boolean>()
 
-    var taskDescription: String? = null
-        @Bindable
-        set (value: String?) {
-            field = value
-            task.description = value ?: ""
-        }
+    private val todoList = mutableListOf<ToDo>()
+    private val _todoList = MutableLiveData<List<ToDo>>()
 
-    var todoDescription: String? = null
-        @Bindable
-        set (value: String?) {
-            field = value
-            todo.description = value ?: ""
-        }
+    init {
+        todoFinished.value = false
+    }
 
-    var todoChecked: Boolean? = null
-        @Bindable
-        set (value: Boolean?) {
-            field = value
-            todo.finished = value ?: false
-        }
+    fun getTodoList(): LiveData<List<ToDo>> = Transformations.map(_todoList) {
+        _todoList.value
+    }
+    fun getTodoCount(): LiveData<Int> = Transformations.map(_todoList) {
+        _todoList.value?.size
+    }
 
     fun addTodo() {
-        task.todos?.add(todo)
-        todo = ToDo()
+        var todo = ToDo(description = todoDescription.value!!, finished = todoFinished.value!!)
+        todoList.add(todo)
+        _todoList.value = todoList
     }
 
 }

@@ -23,8 +23,8 @@ class AddEditFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.todoText.setOnFocusChangeListener { view, hasFocus ->  if (hasFocus) binding.doneCheck.visibility = View.VISIBLE}
-        binding.todoText.setOnEditorActionListener { view, actionId, keyEvent ->
+        binding.todoText.setOnFocusChangeListener { _, hasFocus ->  if (hasFocus) binding.doneCheck.visibility = View.VISIBLE}
+        binding.todoText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 addTodo()
                 true
@@ -52,12 +52,8 @@ class AddEditFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.done_action) {
-            createTask()
-            true
-        }else {
-            super.onOptionsItemSelected(item)
-        }
+        createTask()
+        return true
     }
 
     private fun createTask() {
