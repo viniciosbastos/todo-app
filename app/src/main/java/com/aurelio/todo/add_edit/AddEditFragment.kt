@@ -10,20 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 
 import com.aurelio.todo.R
+import com.aurelio.todo.data.Task
+import com.aurelio.todo.data.ToDo
 import com.aurelio.todo.databinding.FragmentAddEditBinding
 
 class AddEditFragment : Fragment() {
 
     private val viewModel: AddEditViewModel by lazy { ViewModelProviders.of(this).get(AddEditViewModel::class.java) }
+    private lateinit var binding: FragmentAddEditBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentAddEditBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-
         binding.todoText.setOnFocusChangeListener { view, hasFocus ->  if (hasFocus) binding.doneCheck.visibility = View.VISIBLE}
         binding.todoText.setOnEditorActionListener { view, actionId, keyEvent ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -37,7 +39,7 @@ class AddEditFragment : Fragment() {
     }
 
     private fun addTodo() {
-        Toast.makeText(context, "ToDo added", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "ToDo ${viewModel.todoDescription}", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
