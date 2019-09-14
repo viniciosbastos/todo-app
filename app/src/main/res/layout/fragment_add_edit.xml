@@ -41,18 +41,24 @@
                 android:id="@+id/done_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layoutDirection="rtl"
+                android:text="@null"
                 android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/todo_text_layout"
+                app:layout_constraintEnd_toStartOf="@+id/todo_text_layout"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/description_text_layout"
-                app:layout_constraintTop_toBottomOf="@+id/description_text_layout" />
+                tools:visibility="" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/todo_text_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:hintEnabled="false"
                 app:boxBackgroundColor="@android:color/transparent"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="@+id/description_text_layout"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/done_check"
                 app:layout_constraintTop_toBottomOf="@+id/description_text_layout">
 
@@ -62,7 +68,11 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionDone"
                     android:inputType="text"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    app:layout_constraintEnd_toStartOf="@+id/done_check"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:layout_editor_absoluteY="319dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
