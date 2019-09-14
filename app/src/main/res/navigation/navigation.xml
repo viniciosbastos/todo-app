@@ -9,7 +9,9 @@
         android:label="TasksFragment" >
         <action
             android:id="@+id/action_tasksFragment_to_addEditFragment"
-            app:destination="@id/addEditFragment" />
+            app:destination="@id/addEditFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/addEditFragment"
