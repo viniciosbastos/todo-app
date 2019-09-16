@@ -24,12 +24,10 @@ class AddEditViewModel : ViewModel() {
     fun getTodoList(): LiveData<List<ToDo>> = Transformations.map(_todoList) {
         _todoList.value
     }
-    fun getTodoCount(): LiveData<Int> = Transformations.map(_todoList) {
-        _todoList.value?.size
-    }
 
     fun addTodo() {
-        var todo = ToDo(description = todoDescription.value!!, finished = todoFinished.value!!)
+        var todoId = todoList.size + 1
+        var todo = ToDo(id = todoId, description = todoDescription.value!!, finished = todoFinished.value!!)
         todoList.add(todo)
         _todoList.value = todoList
         resetInputs()

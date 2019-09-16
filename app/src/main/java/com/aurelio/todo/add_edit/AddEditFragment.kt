@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 
 import com.aurelio.todo.R
 import com.aurelio.todo.databinding.FragmentAddEditBinding
@@ -23,7 +24,7 @@ class AddEditFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.todoText.setOnFocusChangeListener { _, hasFocus ->  if (hasFocus) binding.doneCheck.visibility = View.VISIBLE}
+        binding.todoText.setOnFocusChangeListener { _, hasFocus ->  binding.doneCheck.visibility = if (hasFocus) View.VISIBLE else View.GONE}
         binding.todoText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 addTodo()
@@ -31,6 +32,11 @@ class AddEditFragment : Fragment() {
             }
             false
         }
+        val adapter = TodoListAdapter()
+        binding.todoListRecyclerView.adapter = adapter
+        viewModel.getTodoList().observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it)
+        })
         setHasOptionsMenu(true)
         return binding.root
     }
