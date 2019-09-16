@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.aurelio.todo.tasks.TasksFragment"
-        android:label="TasksFragment" >
+        android:label="Tasks List">
         <action
             android:id="@+id/action_tasksFragment_to_addEditFragment"
             app:destination="@id/addEditFragment"
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/addEditFragment"
         android:name="com.aurelio.todo.add_edit.AddEditFragment"
-        android:label="AddEditFragment" >
+        android:label="Task">
         <action
             android:id="@+id/action_addEditFragment_to_tasksFragment"
             app:destination="@id/tasksFragment"
