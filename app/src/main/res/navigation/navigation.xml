@@ -16,5 +16,12 @@
     <fragment
         android:id="@+id/addEditFragment"
         android:name="com.aurelio.todo.add_edit.AddEditFragment"
-        android:label="AddEditFragment" />
+        android:label="AddEditFragment" >
+        <action
+            android:id="@+id/action_addEditFragment_to_tasksFragment"
+            app:destination="@id/tasksFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popUpTo="@+id/tasksFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 </navigation>

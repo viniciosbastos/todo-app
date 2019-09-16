@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 
-class Repository {
+class Repository private constructor(){
 
     private val tasksList = mutableListOf<Task>()
     private val _tasks = MutableLiveData<List<Task>>()
@@ -16,16 +16,17 @@ class Repository {
     }
 
     fun addTask(task: Task) {
+        task.id =  tasksList.size + 1
         tasksList.add(task)
         _tasks.value = tasksList.toList()
     }
 
     companion object {
-        private lateinit var INSTANCE: Repository
+        private var INSTANCE: Repository? = null
         fun getInstance(): Repository {
-            if (INSTANCE != null)
+            if (INSTANCE == null)
                 INSTANCE = Repository()
-            return INSTANCE
+            return INSTANCE!!
         }
     }
 }

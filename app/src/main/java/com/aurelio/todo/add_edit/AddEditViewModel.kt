@@ -1,14 +1,15 @@
 package com.aurelio.todo.add_edit
 
-import androidx.databinding.Bindable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.aurelio.todo.data.Repository
 import com.aurelio.todo.data.Task
 import com.aurelio.todo.data.ToDo
 
 class AddEditViewModel : ViewModel() {
+    private lateinit var repository: Repository
 
     val taskDescription = MutableLiveData<String>()
     val todoDescription = MutableLiveData<String>()
@@ -17,8 +18,14 @@ class AddEditViewModel : ViewModel() {
     private val todoList = mutableListOf<ToDo>()
     private val _todoList = MutableLiveData<List<ToDo>>()
 
+    private val _navigateToTasks = MutableLiveData<Boolean>()
+    val navigateToTasks: LiveData<Boolean>
+        get() = _navigateToTasks
+
     init {
         todoFinished.value = false
+        repository = Repository.getInstance()
+        _navigateToTasks.value = false
     }
 
     fun getTodoList(): LiveData<List<ToDo>> = Transformations.map(_todoList) {
@@ -36,5 +43,15 @@ class AddEditViewModel : ViewModel() {
     private fun resetInputs() {
         todoDescription.value = ""
         todoFinished.value = false
+    }
+
+    fun createTask() {
+        val task = Task(description = taskDescription.value!!, todos = todoList)
+        repository.addTask(task)
+        _navigateToTasks.value = true
+    }
+
+    fun doneNavigating() {
+        _navigateToTasks.value = false
     }
 }

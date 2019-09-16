@@ -16,7 +16,7 @@ class TasksViewModel : ViewModel() {
         _navigateToAddEdit.value = false
     }
 
-    private var repository: Repository = Repository()
+    private var repository: Repository = Repository.getInstance()
 
     val tasks = repository.tasks
 
