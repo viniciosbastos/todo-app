@@ -24,7 +24,6 @@ class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback(
 
         fun bind(task: Task) {
             binding.descriptionText.text = task.description
-            binding.countText.text = "Count: ${task.todos.size}"
             binding.createdAt.text = getDateFromMillis(task.createdAt)
         }
 
