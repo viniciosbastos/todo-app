@@ -1,19 +1,10 @@
 package com.aurelio.todo.util
 
-open class Event<out T>(private val content: T) {
+import android.annotation.SuppressLint
+import java.text.SimpleDateFormat
+import java.util.*
 
-    var hasBeenHandled = false
-        private set // Allow external read but not write
-
-    /**
-     * Returns the content and prevents its use again.
-     */
-    fun getContentIfNotHandled(): T? {
-        return if (hasBeenHandled) {
-            null
-        } else {
-            hasBeenHandled = true
-            content
-        }
-    }
+@SuppressLint("SimpleDateFormat")
+fun getDateFromMillis(millis: Long): String {
+    return SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date(millis))
 }

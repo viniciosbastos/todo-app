@@ -3,5 +3,6 @@ package com.aurelio.todo.data
 data class Task (
     var id: Int? = null,
     var description: String = "",
-    var todos: MutableList<ToDo> = mutableListOf()
+    var todos: MutableList<ToDo> = mutableListOf(),
+    val createdAt: Long = System.currentTimeMillis()
 )

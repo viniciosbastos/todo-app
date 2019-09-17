@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aurelio.todo.R
 import com.aurelio.todo.data.Task
 import com.aurelio.todo.databinding.ListItemTaskBinding
+import com.aurelio.todo.util.getDateFromMillis
 
 class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,6 +25,7 @@ class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback(
         fun bind(task: Task) {
             binding.descriptionText.text = task.description
             binding.countText.text = "Count: ${task.todos.size}"
+            binding.createdAt.text = getDateFromMillis(task.createdAt)
         }
 
         companion object {
