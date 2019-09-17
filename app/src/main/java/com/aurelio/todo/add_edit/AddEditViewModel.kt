@@ -9,7 +9,7 @@ import com.aurelio.todo.data.Task
 import com.aurelio.todo.data.ToDo
 
 class AddEditViewModel : ViewModel() {
-    private lateinit var repository: Repository
+    private var repository: Repository
 
     val taskDescription = MutableLiveData<String>()
     val todoDescription = MutableLiveData<String>()
@@ -28,9 +28,7 @@ class AddEditViewModel : ViewModel() {
         _navigateToTasks.value = false
     }
 
-    fun getTodoList(): LiveData<List<ToDo>> = Transformations.map(_todoList) {
-        _todoList.value
-    }
+    fun getTodoList(): LiveData<List<ToDo>> = _todoList
 
     fun addTodo() {
         var todoId = todoList.size + 1
@@ -53,5 +51,9 @@ class AddEditViewModel : ViewModel() {
 
     fun doneNavigating() {
         _navigateToTasks.value = false
+    }
+
+    val isTaskValid: LiveData<Boolean> = Transformations.map(taskDescription) { taskText ->
+        !taskText.isNullOrEmpty()
     }
 }

@@ -2,6 +2,7 @@ package com.aurelio.todo.add_edit
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -17,6 +18,7 @@ class AddEditFragment : Fragment() {
 
     private val viewModel: AddEditViewModel by lazy { ViewModelProviders.of(this).get(AddEditViewModel::class.java) }
     private lateinit var binding: FragmentAddEditBinding
+    private lateinit var menu: Menu
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,9 @@ class AddEditFragment : Fragment() {
                 viewModel.doneNavigating()
             }
         })
+        viewModel.isTaskValid.observe(viewLifecycleOwner, Observer { valid ->
+            menu.findItem(R.id.done_action).isVisible = valid
+        })
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -53,6 +58,7 @@ class AddEditFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        this.menu = menu
         inflater.inflate(R.menu.action_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
