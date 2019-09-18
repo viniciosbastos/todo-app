@@ -24,8 +24,7 @@ class AddEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val taskId: Int = AddEditFragmentArgs.fromBundle(arguments!!).taskId
-        if (taskId > 0) Toast.makeText(context, "taskId: $taskId", Toast.LENGTH_LONG).show()
+        setHasOptionsMenu(true)
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
@@ -48,11 +47,13 @@ class AddEditFragment : Fragment() {
                 viewModel.doneNavigating()
             }
         })
-        viewModel.isTaskValid.observe(viewLifecycleOwner, Observer { valid ->
-            menu.findItem(R.id.done_action).isVisible = valid
-        })
-        setHasOptionsMenu(true)
         return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val taskId: Int = AddEditFragmentArgs.fromBundle(arguments!!).taskId
+        if (taskId > 0) viewModel.loadTask(taskId)
     }
 
     private fun addTodo() {
@@ -62,11 +63,16 @@ class AddEditFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         this.menu = menu
         inflater.inflate(R.menu.action_menu, menu)
+
+        viewModel.isTaskValid.observe(viewLifecycleOwner, Observer { valid ->
+            menu.findItem(R.id.done_action).isVisible = valid
+        })
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        viewModel.createTask()
+        viewModel.done()
         return true
     }
 }

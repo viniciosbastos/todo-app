@@ -21,6 +21,17 @@ class Repository private constructor(){
         _tasks.value = tasksList.toList()
     }
 
+    fun getTask(taskId: Int): Task {
+        val task = tasksList.find { it.id == taskId }
+        return task!!
+    }
+
+    fun update(task: Task) {
+        var index = tasksList.indexOf(tasksList.find { it.id == task.id })
+        tasksList.removeAt(index)
+        tasksList.add(index, task)
+    }
+
     companion object {
         private var INSTANCE: Repository? = null
         fun getInstance(): Repository {
