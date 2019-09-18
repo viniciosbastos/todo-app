@@ -22,8 +22,7 @@ class TodoListAdapter: ListAdapter<ToDo, TodoListAdapter.ViewHolder>(TodoListDif
     class ViewHolder private constructor(val binding: ListItemTodoBinding): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(todo: ToDo) {
-            binding.finishedCheck.isChecked = todo.finished
-            binding.descriptionText.text = todo.description
+            binding.todo = todo
         }
 
         companion object {
