@@ -11,18 +11,19 @@ import com.aurelio.todo.data.Task
 import com.aurelio.todo.databinding.ListItemTaskBinding
 import com.aurelio.todo.util.getDateFromMillis
 
-class TasksAdapter: ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()){
+class TasksAdapter(private val clickListener: TasksItemListener): ListAdapter<Task, TasksAdapter.ViewHolder>(TaskDiffCallback()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class ViewHolder private constructor(val binding: ListItemTaskBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(task: Task) {
+        fun bind(task: Task, clickListener: TasksItemListener) {
+            binding.listItemTask.setOnClickListener { clickListener.onClick(task) }
             binding.descriptionText.text = task.description
             binding.createdAt.text = getDateFromMillis(task.createdAt)
         }
@@ -45,4 +46,8 @@ class TaskDiffCallback: DiffUtil.ItemCallback<Task>() {
     override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
         return oldItem == newItem
     }
+}
+
+class TasksItemListener(private val clickListener: (task: Int) -> Unit) {
+    fun onClick(task: Task) = clickListener(task.id!!)
 }

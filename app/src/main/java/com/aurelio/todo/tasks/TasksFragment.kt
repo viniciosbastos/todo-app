@@ -24,18 +24,27 @@ class TasksFragment : Fragment() {
         val binding: FragmentTasksBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        val adapter = TasksAdapter()
+        val adapter = TasksAdapter(TasksItemListener {
+            viewModel.onTaskItemClicked(it)
+        })
         binding.tasksRecyclerView.adapter = adapter
         viewModel.tasks.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
-        viewModel.navigateToAddEdit.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToAdd.observe(viewLifecycleOwner, Observer {
             if (it) {
                 this.findNavController()
                     .navigate(TasksFragmentDirections.actionTasksFragmentToAddEditFragment())
-                viewModel.doneNavigating()
+                viewModel.doneNavigatingAdd()
+            }
+        })
+
+        viewModel.navigateToEdit.observe(viewLifecycleOwner, Observer { taskId ->
+            taskId?.let {
+                this.findNavController()
+                    .navigate(TasksFragmentDirections.actionTasksFragmentToAddEditFragment(it))
+                viewModel.doneNavigatingEdit()
             }
         })
 
         return binding.root
     }
-
 }

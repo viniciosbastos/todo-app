@@ -4,16 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aurelio.todo.data.Repository
-import com.aurelio.todo.data.Task
-import com.aurelio.todo.data.ToDo
 
 class TasksViewModel : ViewModel() {
-    private val _navigateToAddEdit = MutableLiveData<Boolean>()
-    val navigateToAddEdit: LiveData<Boolean>
-        get() = _navigateToAddEdit
+    private val _navigateToAdd = MutableLiveData<Boolean>()
+    val navigateToAdd: LiveData<Boolean>
+        get() = _navigateToAdd
 
-    fun doneNavigating() {
-        _navigateToAddEdit.value = false
+    private val _navigateToEdit = MutableLiveData<Int>()
+    val navigateToEdit: LiveData<Int>
+        get() = _navigateToEdit
+
+    fun doneNavigatingAdd() {
+        _navigateToAdd.value = false
+    }
+
+    fun doneNavigatingEdit() {
+        _navigateToEdit.value = null
     }
 
     private var repository: Repository = Repository.getInstance()
@@ -21,9 +27,11 @@ class TasksViewModel : ViewModel() {
     val tasks = repository.tasks
 
     fun addTask() {
-        _navigateToAddEdit.value = true
+        _navigateToAdd.value = true
     }
 
-
+    fun onTaskItemClicked(taskId: Int ){
+        _navigateToEdit.value = taskId
+    }
 
 }

@@ -24,6 +24,8 @@ class AddEditFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val taskId: Int = AddEditFragmentArgs.fromBundle(arguments!!).taskId
+        if (taskId > 0) Toast.makeText(context, "taskId: $taskId", Toast.LENGTH_LONG).show()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_edit, container, false)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
