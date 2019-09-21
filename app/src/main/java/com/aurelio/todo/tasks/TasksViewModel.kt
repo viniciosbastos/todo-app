@@ -1,11 +1,14 @@
 package com.aurelio.todo.tasks
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aurelio.todo.data.Repository
+import com.aurelio.todo.data.TodoAppDatabase
 
-class TasksViewModel : ViewModel() {
+class TasksViewModel(application: Application) : AndroidViewModel(application) {
     private val _navigateToAdd = MutableLiveData<Boolean>()
     val navigateToAdd: LiveData<Boolean>
         get() = _navigateToAdd
@@ -22,9 +25,14 @@ class TasksViewModel : ViewModel() {
         _navigateToEdit.value = null
     }
 
-    private var repository: Repository = Repository.getInstance()
+    private var repository: Repository
 
-    val tasks = repository.tasks
+    init {
+        val database = TodoAppDatabase.getDatabase(application)
+        repository =  Repository(database.taskDao(), database.todoDao())
+    }
+
+    val tasks = repository.getTasks()
 
     fun addTask() {
         _navigateToAdd.value = true
