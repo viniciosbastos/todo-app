@@ -2,14 +2,14 @@ package com.aurelio.todo.add_edit
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.aurelio.todo.data.Repository
+import com.aurelio.todo.data.TaskRepository
 import com.aurelio.todo.data.Task
 import com.aurelio.todo.data.ToDo
 import com.aurelio.todo.data.TodoAppDatabase
 import kotlinx.coroutines.launch
 
 class AddEditViewModel(application: Application) : AndroidViewModel(application) {
-    private var repository: Repository
+    private var repository: TaskRepository
     private var task: Task? = null
 
     val taskDescription = MutableLiveData<String>()
@@ -26,7 +26,7 @@ class AddEditViewModel(application: Application) : AndroidViewModel(application)
     init {
         todoFinished.value = false
         val database = TodoAppDatabase.getDatabase(application)
-        repository = Repository(database.taskDao(), database.todoDao())
+        repository = TaskRepository(database.taskDao(), database.todoDao())
         _navigateToTasks.value = false
     }
 

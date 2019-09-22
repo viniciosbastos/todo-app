@@ -4,8 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.aurelio.todo.data.Repository
+import com.aurelio.todo.data.TaskRepository
 import com.aurelio.todo.data.TodoAppDatabase
 
 class TasksViewModel(application: Application) : AndroidViewModel(application) {
@@ -25,11 +24,11 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
         _navigateToEdit.value = null
     }
 
-    private var repository: Repository
+    private var repository: TaskRepository
 
     init {
         val database = TodoAppDatabase.getDatabase(application)
-        repository =  Repository(database.taskDao(), database.todoDao())
+        repository =  TaskRepository(database.taskDao(), database.todoDao())
     }
 
     val tasks = repository.getTasks()
