@@ -12,14 +12,11 @@ interface TaskDao {
     @Transaction @Query("select * from task order by created_at desc")
     fun getTasks(): LiveData<List<DataTaskWithTodo>>
 
-    @Query("select * from task order by created_at desc")
-    fun getTasks_(): List<DataTaskWithTodo>
-
     @Query("select * from task where description = :description")
     fun getTaskByDescription(description: String): DataTask
 
     @Insert
-    fun insert(task: DataTask)
+    suspend fun insert(task: DataTask)
 
     @Update
     fun update(task: DataTask)

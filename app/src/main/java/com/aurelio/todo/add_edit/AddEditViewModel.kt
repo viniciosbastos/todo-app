@@ -6,6 +6,7 @@ import com.aurelio.todo.data.Repository
 import com.aurelio.todo.data.Task
 import com.aurelio.todo.data.ToDo
 import com.aurelio.todo.data.TodoAppDatabase
+import kotlinx.coroutines.launch
 
 class AddEditViewModel(application: Application) : AndroidViewModel(application) {
     private var repository: Repository
@@ -59,8 +60,10 @@ class AddEditViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private fun createTask() {
-        val task = Task(description = taskDescription.value!!, todos = todoList)
-        repository.addTask(task)
+        viewModelScope.launch {
+            val task = Task(description = taskDescription.value!!, todos = todoList)
+            repository.addTask(task)
+        }
         _navigateToTasks.value = true
     }
 

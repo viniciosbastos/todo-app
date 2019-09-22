@@ -23,14 +23,12 @@ class Repository constructor(private val taskDao: TaskDao, private val todoDao: 
 
     fun getTasks():LiveData<List<Task>> = taskDao.getTasks().map { tasks -> tasks.map { mapper.fromEntity(it) } }
 
-    fun addTask(task: Task) {
-        liveData<Unit>(Dispatchers.IO) {
-            task.id =  tasksList.size + 1
-            taskDao.insert(mapper.fromDomain(task).task)
-        }
+    suspend fun addTask(task: Task) {
+        task.id =  tasksList.size + 1
+        taskDao.insert(mapper.fromDomain(task).task)
+    }
         //tasksList.add(task)
         //_tasks.value = tasksList.toList()
-    }
 
     fun getTask(taskId: Int): Task {
         val task = tasksList.find { it.id == taskId }
